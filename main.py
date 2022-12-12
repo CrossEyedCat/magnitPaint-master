@@ -212,9 +212,7 @@ class PaintApp:
             flag = 1
             for elect in self.Cluster.get_cluster():
                 temp_len = elect.get_vector_length(vector_x=x, vector_y=y)
-
                 temp_angle = elect.get_vector_angle(vector_x=x, vector_y=y)
-
                 if flag == 1:
                     length = temp_len
                     angle = temp_angle
@@ -227,6 +225,7 @@ class PaintApp:
                     len2 = temp_len * temp_len + length * length - 2 * temp_len * length * cos
                     len2 = math.sqrt(len2)
                     angle = math.asin(sin * temp_len / len2) + temp_angle
+                    length = len2;
 
 
             vector.set_length(len2)
