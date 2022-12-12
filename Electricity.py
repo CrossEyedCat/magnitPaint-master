@@ -54,7 +54,7 @@ class Electricity:
         x = self.x - vector_x
         y = self.y - vector_y
         num = x * x + y * y
-        length = math.sqrt(100000/num)
-        if length>20:
+        length = math.sqrt(100000 / num)
+        if length > 20:
             return 0
         return length

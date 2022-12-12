@@ -5,6 +5,11 @@ from Electricity import *
 from VectorField import *
 
 
+def from_rgb(rgb):
+    # translates an rgb tuple of int to a tkinter friendly color code
+    return "#%02x%02x%02x" % rgb
+
+
 class PaintApp:
     Cluster = ElectricityCluster()
     VecFil = VectorField()
@@ -70,7 +75,7 @@ class PaintApp:
         self.drawing_tool = "inside_elec"
 
     def set_outside_drawing_tool(self):
-        self.drawing_tool = "outside-elec"
+        self.drawing_tool = "outside_elec"
 
     def remove_drawing_tool(self):
         self.drawing_tool = "remove"
@@ -202,7 +207,8 @@ class PaintApp:
                                               x + 7.5, y,
                                               fill="black",
                                               width=4)
-
+        max_len = 0
+        min_len = 99999999999999
         for vector in self.VecFil.get_VectorField():
             x = vector.get_X()
             y = vector.get_Y()
@@ -225,11 +231,19 @@ class PaintApp:
                     len2 = temp_len * temp_len + length * length - 2 * temp_len * length * cos
                     len2 = math.sqrt(len2)
                     angle = math.asin(sin * temp_len / len2) + temp_angle
-                    length = len2;
-
-
+                    length = len2
+            if max_len < len2:
+                max_len = len2
+            if min_len > len2:
+                min_len = len2
             vector.set_length(len2)
             vector.set_angle(angle)
+        part = (max_len - min_len) / 256
+        for vector in self.VecFil.get_VectorField():
+            color = int((vector.length - min_len) / part)+30
+            if color < 0: color = 0
+            if color > 255: color = 255
+            vector.set_color(from_rgb((color, 0, 255 - color)))
             vector.draw(self.drawing_area)
 
 
