@@ -2,11 +2,12 @@ import math
 
 
 class Electricity:
-    def __init__(self, x, y, clockwise, is_elec):
+    def __init__(self, x, y, clockwise, is_elec, current_strength):
         self.x = x
         self.y = y
         self.clockwise = clockwise
         self.is_elec = is_elec
+        self.current_strength = current_strength
 
     def get_vector_angle(self, vector_x, vector_y):
         x = vector_x - self.x
@@ -54,7 +55,7 @@ class Electricity:
         x = self.x - vector_x
         y = self.y - vector_y
         num = x * x + y * y
-        length = math.sqrt(100000 / num)
+        length = 100000*self.current_strength / (num*2*math.pi)if num != 0 else 0
         if length > 20:
             return 0
         return length

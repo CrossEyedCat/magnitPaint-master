@@ -2,11 +2,15 @@ from MagneticVector import *
 
 
 class VectorField:
-    collection = []
-
     def __init__(self):
-        for i in range(50):
-            for j in range(50):
+        self.collection = []
+
+    def set_window_size(self, width: int, height: int):
+        self.collection = []
+        width //= 10
+        height //= 10
+        for i in range(width):
+            for j in range(height):
                 vec = Magnetic_Vector(i * 10, j * 10)
                 self.collection.append(vec)
 
